@@ -12,7 +12,7 @@ steps:
       zap-cli -p 8080 active-scan -r $_TARGET_URL
       zap-cli -p 8080 alerts
       zap-cli report -f html -o /zap/wrk/testreport_$(date +%Y%m%d).html
-      
+  timeout: 5000s
 artifacts:
   objects:
     location: 'gs://[$_STORAGE_BUCKET]/'
