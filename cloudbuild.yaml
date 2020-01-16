@@ -1,12 +1,11 @@
 steps:
-- name: 'owasp/zap2docker-weekly:latest'
+- name: 'owasp/zap2docker-stable'
   entrypoint: bash
   args:
     - -c
     - |
       zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true &
-      sed -i -e  's/python3/python/'  /usr/local/bin/zap-cli
-      sleep 10
+      sleep 20
       zap-cli -p 8080 status
       zap-cli -p 8080 open-url $_TARGET_URL
       zap-cli -p 8080 spider $_TARGET_URL
