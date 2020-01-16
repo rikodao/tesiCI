@@ -1,5 +1,5 @@
 steps:
-- name: ' zap2docker-weekly:latest'
+- name: 'owasp/zap2docker-weekly:latest'
   entrypoint: bash
   args:
     - -c
