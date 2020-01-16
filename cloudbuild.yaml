@@ -1,6 +1,6 @@
 steps:
 - name: 'znly/protoc'
-  args: ["--swagger_out=", "./sample.proto"]
+  args: ["--swagger_out=.", "sample.proto"]
 
 artifacts:
   objects:
