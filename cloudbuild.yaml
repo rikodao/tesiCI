@@ -1,19 +1,8 @@
 steps:
-- name: 'owasp/zap2docker-stable'
-  entrypoint: bash
-  args:
-    - -c
-    - |
-      zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true &
-      sleep 20
-      zap-cli -p 8080 status
-      zap-cli -p 8080 open-url $_TARGET_URL
-      zap-cli -p 8080 spider $_TARGET_URL
-      zap-cli -p 8080 active-scan -r $_TARGET_URL
-      zap-cli -p 8080 alerts
-      zap-cli report -f html -o /zap/wrk/testreport_$(date +%Y%m%d).html
-  timeout: 5000s
+- name: 'znly/protoc'
+  args: ["--swagger_out=", "sample.proto"]
+
 artifacts:
   objects:
-    location: 'gs://[$_STORAGE_BUCKET]/'
-    paths: ['reports']
+    location: 'gs://ca-oiso-gcs/'
+    paths: ['sample.swagger.json']
