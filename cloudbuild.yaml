@@ -7,7 +7,9 @@ steps:
       zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true &
       sleep 25
       zap-cli -p 8080 quick-scan -r $_TARGET_URL
+      echo "doone quick-scan!!!!!!!!!!!!!"
       zap-cli report -f html -o ./report.html
+      echo "doone report!!!!!!!!!!!!!"
 
 artifacts:
   objects:
