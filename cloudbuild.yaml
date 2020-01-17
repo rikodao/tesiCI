@@ -8,21 +8,20 @@ steps:
       sleep 25
       zap-cli -p 8080 quick-scan -r $_TARGET_URL
       echo "doone quick-scan!!!!!!!!!!!!!"
-      zap-cli report -f html -o /workspace/report.html
+      zap-cli report -f html -o report.html
       echo "ls!!!!!!!!!!!!!"      
       ls
       echo "pwd!!!!!!!!!!!!!"      
       pwd
       echo "doone report!!!!!!!!!!!!!"
-# - name: 'gcr.io/cloud-builders/gcloud'
-#   entrypoint: bash
-#   args:
-#     - -c
-#     - |
-#       ls
-#       ls /
-
-artifacts:
-  objects:
-    location: 'gs://$_STORAGE_BUCKET/'
-    paths: ['report.html']
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      echo "ls!!!!!!!!!!!!!"      
+      ls
+      echo "pwd!!!!!!!!!!!!!"      
+      pwd
+      echo "ls///////"      
+      ls /
