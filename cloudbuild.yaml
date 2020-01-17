@@ -10,7 +10,10 @@ steps:
       echo "doone quick-scan!!!!!!!!!!!!!"
       zap-cli report -f html -o /zap/report.html
       chmod 777 /zap/report.html
+      echo "ls!!!!!!!!!!!!!"      
       ls
+      echo "pwd!!!!!!!!!!!!!"      
+      pwd
       echo "doone report!!!!!!!!!!!!!"
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: bash
