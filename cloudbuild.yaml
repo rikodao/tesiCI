@@ -8,10 +8,10 @@ steps:
       sleep 25
       zap-cli -p 8080 quick-scan -r $_TARGET_URL
       echo "doone quick-scan!!!!!!!!!!!!!"
-      zap-cli report -f html -o ./report.html
+      zap-cli report -f html -o /zap/report.html
       echo "doone report!!!!!!!!!!!!!"
 
 artifacts:
   objects:
-    location: 'gs://[$_STORAGE_BUCKET]/'
-    paths: ['reports/report.html']
+    location: 'gs://[$_STORAGE_BUCKET]/reports'
+    paths: ['/zap/report.html']
