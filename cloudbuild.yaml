@@ -13,5 +13,5 @@ steps:
 
 artifacts:
   objects:
-    location: 'gs://$_STORAGE_BUCKET/reports'
-    paths: ['/zap/report.html']
+    location: 'gs://$_STORAGE_BUCKET'
+    paths: ['/reports/report.html']
