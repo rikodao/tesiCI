@@ -9,9 +9,10 @@ steps:
       zap-cli -p 8080 quick-scan -r $_TARGET_URL
       echo "doone quick-scan!!!!!!!!!!!!!"
       zap-cli report -f html -o /zap/report.html
+      chmod 777 /zap/report.html
       echo "doone report!!!!!!!!!!!!!"
 
 artifacts:
   objects:
     location: 'gs://$_STORAGE_BUCKET/'
-    paths: ['report.html']
+    paths: ['/zap/report.html']
