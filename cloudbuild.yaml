@@ -1,8 +1,15 @@
 steps:
-- name: 'znly/protoc'
-  args: ["-I.", "--swagger_out=.", "sample.proto"]
+- name: 'owasp/zap2docker-stable'
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true &
+      sleep 25
+      zap-cli -p 8080 quick-scan -r $_TARGET_URL
+      zap-cli report -f html -o ./report.html
 
 artifacts:
   objects:
-    location: 'gs://ca-oiso-gcs/'
-    paths: ['sample.swagger.json']
+    location: 'gs://[$_STORAGE_BUCKET]/'
+    paths: ['reports/report.html']
