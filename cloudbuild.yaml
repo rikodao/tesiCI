@@ -10,9 +10,17 @@ steps:
       echo "doone quick-scan!!!!!!!!!!!!!"
       zap-cli report -f html -o /zap/report.html
       chmod 777 /zap/report.html
+      ls
       echo "doone report!!!!!!!!!!!!!"
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      ls
+      ls /
 
-artifacts:
-  objects:
-    location: 'gs://$_STORAGE_BUCKET/'
-    paths: ['/zap/report.html']
+# artifacts:
+#   objects:
+#     location: 'gs://$_STORAGE_BUCKET/'
+#     paths: ['/zap/report.html']
