@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: owasp-batch
+  label: 
+spec:
+  template:
+    spec:
+      initContainers:
+      - name: owasp-zap
+        image: owasp/zap2docker-stable
+        command: ["/bin/bash", "-c"]
+        args:
+        - zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true&
+          sleep 15;
+          zap-cli -p 8080 spider $(TARGET_URL);
+          zap-cli -p 8080 active-scan -r $(TARGET_URL);
+          zap-cli report -f html -o /cache/report.html;
+        env:
+        - name: TARGET_URL
+          value: "https://search.gcpdev.happyhotel.jp/"
+        volumeMounts:
+        - mountPath: /cache
+          name: cache-volume
+      containers:
+      - name: send-report
+        image: gcr.io/cloud-builders/gsutil
+        args: ["cp", "/cache/report.html","$(GCS_BUCKET)"]
+        env:
+        - name: GCS_BUCKET
+          value: "gs://ca-oiso-gcs/reports"
+        volumeMounts:
+        - mountPath: /cache
+          name: cache-volume
+      volumes:
+      - name: cache-volume
+        emptyDir: {}
+      restartPolicy: Never
+  backoffLimit: 4
