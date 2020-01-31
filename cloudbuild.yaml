@@ -1,39 +1,14 @@
 steps:
-- name: 'owasp/zap2docker-stable'
+- name: 'gcr.io/ca-oiso-test/gcloud-zap:latest'
   entrypoint: bash
+  timeout: 6000s
   args:
     - -c
     - |
-      gsutil ls
-    #   CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
-    #   echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-    #   curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-    #   sudo apt-get update && sudo apt-get install google-cloud-sdk
-
-
-
-#       zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true &
-#       sleep 25
-#       zap-cli -p 8080 quick-scan -r $_TARGET_URL
-#       echo "doone quick-scan!!!!!!!!!!!!!"
-#       zap-cli report -f html -o /zap/report.html
-#       chmod 777 /zap/report.html
-      
-
-#       echo "ls/zap!!!!!!!!!!!!!"      
-#       ls /zap
-#       echo "pwd!!!!!!!!!!!!!"      
-#       pwd
-#       echo "doone report!!!!!!!!!!!!!"
-# - name: 'gcr.io/cloud-builders/gcloud'
-#   entrypoint: bash
-#   args:
-#     - -c
-#     - |
-#       ls
-#       ls /zap
-
-# # artifacts:
-# #   objects:
-# #     location: 'gs://$_STORAGE_BUCKET/'
-# #     paths: ['/zap/report.html']
+      zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true &
+      sleep 25
+      zap-cli -p 8080 quick-scan -r $_TARGET_URL
+      echo "doone quick-scan!!!!!!!!!!!!!"
+      google-cloud-sdk/bin/gsutil report.html cp gs://$_STORAGE_BUCKET/ 
+      zap-cli report -f html -o /zap/report.html
+      google-cloud-sdk/bin/gsutil /zap/report.html cp gs://$_STORAGE_BUCKET/ 
