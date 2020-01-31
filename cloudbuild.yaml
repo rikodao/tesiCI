@@ -1,7 +1,6 @@
 steps:
 - name: 'gcr.io/ca-oiso-test/gcloud-zap:latest'
   entrypoint: bash
-  timeout: 6000s
   args:
     - -c
     - |
