@@ -11,3 +11,4 @@ steps:
       google-cloud-sdk/bin/gsutil report.html cp gs://$_STORAGE_BUCKET/ 
       zap-cli report -f html -o /zap/report.html
       google-cloud-sdk/bin/gsutil /zap/report.html cp gs://$_STORAGE_BUCKET/ 
+timeout: 6000s
